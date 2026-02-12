@@ -2,7 +2,6 @@
 """
 Contrôle simple de 3 LEDs via GPIO.
 
-À COMPLÉTER : Ajoutez le code pour contrôler 3 LEDs
 - LED rouge sur GPIO 17
 - LED verte sur GPIO 27
 - LED jaune sur GPIO 22
@@ -17,25 +16,29 @@ import time
 import RPi.GPIO as GPIO
 
 # Configuration des broches GPIO
-LED_ROUGE = 17
-LED_VERTE = 27
-LED_JAUNE = 22
+LED_ROUGE = 14
+LED_VERTE = 15
+LED_JAUNE = 18
 
-# TODO : Configurer le mode BCM
-# GPIO.setmode(GPIO.???)
+# Configurer le mode BCM
+GPIO.setmode(GPIO.BCM)
 
-# TODO : Configurer les broches en sortie
-# GPIO.setup(..., GPIO.OUT)
+# Configurer les broches en sortie
+GPIO.setup(LED_ROUGE, GPIO.OUT)
+GPIO.setup(LED_VERTE, GPIO.OUT)
+GPIO.setup(LED_JAUNE, GPIO.OUT)
 
 def allumer_toutes():
     """Allume toutes les LEDs."""
-    # TODO : Implémenter
-    pass
+    GPIO.output(LED_ROUGE, GPIO.HIGH)
+    GPIO.output(LED_VERTE, GPIO.HIGH)
+    GPIO.output(LED_JAUNE, GPIO.HIGH)
 
 def eteindre_toutes():
     """Éteint toutes les LEDs."""
-    # TODO : Implémenter
-    pass
+    GPIO.output(LED_ROUGE, GPIO.LOW)
+    GPIO.output(LED_VERTE, GPIO.LOW)
+    GPIO.output(LED_JAUNE, GPIO.LOW)
 
 def main():
     """Fonction principale."""
@@ -45,16 +48,26 @@ def main():
 
     try:
         while True:
-            # TODO : Allumer chaque LED une par une
-            # avec 1 seconde d'intervalle
-            pass
+            # Allumer rouge
+            eteindre_toutes()
+            GPIO.output(LED_ROUGE, GPIO.HIGH)
+            time.sleep(1)
+
+            # Allumer verte
+            eteindre_toutes()
+            GPIO.output(LED_VERTE, GPIO.HIGH)
+            time.sleep(1)
+
+            # Allumer jaune
+            eteindre_toutes()
+            GPIO.output(LED_JAUNE, GPIO.HIGH)
+            time.sleep(1)
 
     except KeyboardInterrupt:
         print("\nAu revoir!")
     finally:
-        # TODO : Nettoyer les GPIO avant de quitter
-        # GPIO.cleanup()
-        pass
+        eteindre_toutes()
+        GPIO.cleanup()
 
 if __name__ == "__main__":
     main()
